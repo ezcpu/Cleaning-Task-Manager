@@ -1754,6 +1754,8 @@ function isTaskSelected(emp, section, task) {
       }
     }
 
+// Wait for DOM to be ready before running
+document.addEventListener('DOMContentLoaded', () => {
     loadConfig();
     loadData();
     if (data.weeklyReportPendingWeekKey) {
@@ -1764,4 +1766,5 @@ function isTaskSelected(emp, section, task) {
     setInterval(() => {
       if (state.view === 'dashboard') render();
     }, 60000);
+});
   
