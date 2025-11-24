@@ -4,44 +4,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Impact Fitness - Cleaning Task Manager</title>
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Your Custom Styles -->
-  <link rel="stylesheet" href="assets/styles.css">
+  
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body class="bg-gray-50">
-
-  <!-- Claim Modal -->
+  
   <div id="claimModal" class="claim-modal">
     <div class="claim-modal-content">
-      <h2 style="font-size: 22px; font-weight: 700; margin: 0; text-align: center;" id="claimTaskName">Who's claiming this task?</h2>
-      <div id="claimEmployeeList" class="claim-employee-list"></div>
-      <div class="claim-buttons">
-        <button onclick="closeClaimModal()" class="claim-cancel-button">Cancel</button>
+      <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 8px 0; text-align: center;" id="claimTaskName">Who's claiming this task?</h2>
+      <p style="text-align: center; color: var(--gray-600); margin-bottom: 24px; font-size: 14px;">Click your name:</p>
+      <div id="claimUserButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
       </div>
+      <button class="user-btn user-btn-two-people" onclick="showTwoPeopleClaim()" style="margin-top: 12px; width: 100%;">
+        Two People Working Together
+      </button>
+      <button class="user-btn cancel-btn" onclick="hideClaimModal()" style="margin-top: 12px; width: 100%;">
+        Cancel
+      </button>
     </div>
   </div>
 
-  <!-- Main App Container -->
-  <div id="app"></div>
-
-  <!-- Weekly Report Toast -->
-  <div id="weeklyReportToast" class="weekly-toast hidden" onclick="downloadPendingWeeklyReport()">
-    <span style="font-weight: bold;">Weekly Report Ready</span>
-    <span style="font-size: 12px; color: #1e293b;">
-      Click here to save this week's PDF
-    </span>
+  <div id="twoPeopleClaimModal" class="claim-modal">
+    <div class="claim-modal-content">
+      <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 8px 0; text-align: center;">Select Two People</h2>
+      <p style="text-align: center; color: var(--gray-600); margin-bottom: 24px; font-size: 14px;">Click to select (need 2):</p>
+      <div id="twoPeopleClaimButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      </div>
+      <button class="user-btn" onclick="confirmTwoPeopleClaim()" id="confirmTwoClaimBtn" disabled style="margin-top: 12px; width: 100%; opacity: 0.5; background: var(--success);">
+        Confirm Selection
+      </button>
+      <button class="user-btn cancel-btn" onclick="hideTwoClaimModal()" style="margin-top: 12px; width: 100%;">
+        Cancel
+      </button>
+    </div>
   </div>
 
-  <!-- PDF Libraries -->
+  <div id="completeModal" class="claim-modal">
+    <div class="claim-modal-content">
+      <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 8px 0; text-align: center;" id="completeTaskName">Who's completing this task?</h2>
+      <p style="text-align: center; color: var(--gray-600); margin-bottom: 24px; font-size: 14px;">Confirm it's you:</p>
+      <div id="completeUserButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      </div>
+      <button class="user-btn cancel-btn" onclick="hideCompleteModal()" style="margin-top: 12px; width: 100%;">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <div id="app"></div>
+
+  <div id="weeklyReportToast"
+       role="status"
+       aria-live="polite"
+       style="
+         position: fixed;
+         top: 16px;
+         right: 16px;
+         z-index: 1200;
+         display: none;
+       ">
+    <button type="button"
+            onclick="handleWeeklyReportToastClick()"
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 4px;
+              min-width: 260px;
+              max-width: 340px;
+              padding: 12px 16px;
+              border-radius: 999px;
+              border: 1px solid rgba(148, 163, 184, 0.5);
+              background: linear-gradient(135deg, #f5f3ff 0%, #e0e7ff 100%);
+              box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+              cursor: pointer;
+            ">
+      <span style="font-size: 13px; font-weight: 600; color: #4c1d95;">
+        Weekly Report Ready
+      </span>
+      <span style="font-size: 12px; color: #1e293b;">
+        Click here to save this week's PDF
+      </span>
+    </button>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
-  <!-- Your App Logic -->
-  <script src="assets/app.js"></script>
-
+  <script src="app.js"></script>
 </body>
 </html>
